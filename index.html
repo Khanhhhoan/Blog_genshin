@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Hướng Dẫn & Tin Tức Game Hoyoverse</title>
+    <meta name="description" content="Chuyên trang chia sẻ kinh nghiệm, hướng dẫn bảo mật tài khoản, liên kết Hoyoverse và chính sách dịch vụ game uy tín.">
+    <link rel="icon" href="images/thumb_cachlienkethoyoverse.jpg" type="image/png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons (Sleek modern icon set) -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+<body>
+    <!-- Top Reading Progress Bar -->
+    <div id="readingProgress" class="reading-progress"></div>
+
+    <!-- Background Ambient Glow Effects -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+    <div class="ambient-glow glow-3"></div>
+
+    <!-- Header Navigation -->
+    <header class="site-header">
+        <div class="container header-inner">
+            <a href="#/" class="logo">
+                <div class="logo-icon">
+                    <i class="ph-fill ph-game-controller"></i>
+                </div>
+                <div class="logo-text">
+                    <span class="logo-title">HOYO BLOG</span>
+                    <span class="logo-subtitle">Guides & Policies</span>
+                </div>
+            </a>
+
+            <div class="header-actions">
+                <a href="#/" class="nav-link active" id="navHomeLink">
+                    <i class="ph ph-house"></i> Trang chủ
+                </a>
+                <button id="headerSearchBtn" class="search-trigger-btn" title="Tìm kiếm">
+                    <i class="ph ph-magnifying-glass"></i>
+                    <span class="search-btn-text">Tìm bài viết...</span>
+                    <span class="kbd-shortcut">/</span>
+                </button>
+                <a href="/admin.html" class="nav-link admin-nav-btn" title="Trang Quản Trị">
+                    <i class="ph ph-shield-check"></i> Quản trị
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="site-main">
+        <!-- 1. BLOG LIST VIEW -->
+        <section id="listView" class="view-section">
+            <!-- Hero Section -->
+            <div class="hero-section">
+                <div class="container hero-content">
+                    <div class="hero-badge">
+                        <i class="ph-fill ph-sparkle"></i> Cẩm nang & Hướng dẫn Game Hoyoverse
+                    </div>
+                    <h1 class="hero-title">
+                        Chia Sẻ Kinh Nghiệm & <span class="gradient-text">Bảo Mật Tài Khoản</span>
+                    </h1>
+                    <p class="hero-desc">
+                        Nơi cập nhật thông tin hướng dẫn liên kết, gỡ liên kết thứ 3, bảo mật mail và các chính sách dịch vụ an toàn, minh bạch nhất.
+                    </p>
+
+                    <!-- Search & Filter Bar -->
+                    <div class="search-bar-wrapper">
+                        <div class="search-input-box">
+                            <i class="ph ph-magnifying-glass search-icon"></i>
+                            <input type="text" id="searchInput" placeholder="Tìm kiếm hướng dẫn, mẹo chơi, chính sách..." autocomplete="off">
+                            <button id="clearSearchBtn" class="clear-btn d-none" title="Xóa tìm kiếm">
+                                <i class="ph ph-x-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Category Pills -->
+                    <div class="category-pills" id="categoryFilter">
+                        <button class="pill-btn active" data-category="ALL">Tất cả</button>
+                        <button class="pill-btn" data-category="Hướng dẫn Game">Hướng dẫn Game</button>
+                        <button class="pill-btn" data-category="Chính sách">Chính sách</button>
+                        <button class="pill-btn" data-category="Bảo mật Email">Bảo mật Email</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Blog Grid Section -->
+            <div class="container posts-container">
+                <div class="posts-header">
+                    <h2 class="section-title">
+                        <i class="ph-fill ph-article"></i> Danh sách bài viết
+                        <span id="postsCount" class="posts-count-badge">6 bài</span>
+                    </h2>
+                </div>
+
+                <div id="postsGrid" class="posts-grid">
+                    <!-- Cards will be dynamically injected by app.js -->
+                </div>
+
+                <!-- Empty State -->
+                <div id="emptyState" class="empty-state d-none">
+                    <div class="empty-icon">
+                        <i class="ph ph-magnifying-glass"></i>
+                    </div>
+                    <h3>Không tìm thấy bài viết nào</h3>
+                    <p>Thử tìm kiếm với từ khóa khác hoặc xóa bộ lọc để xem tất cả bài viết.</p>
+                    <button id="resetFilterBtn" class="btn btn-primary">Xem tất cả bài viết</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. BLOG DETAIL VIEW -->
+        <section id="detailView" class="view-section d-none">
+            <div class="container detail-container">
+                <!-- Breadcrumbs & Back Button -->
+                <div class="detail-nav-bar">
+                    <a href="#/" class="back-btn">
+                        <i class="ph ph-arrow-left"></i> Quay lại danh sách
+                    </a>
+                    <div class="breadcrumbs">
+                        <a href="#/">Trang chủ</a>
+                        <span class="crumb-separator">/</span>
+                        <span id="crumbCategory" class="crumb-category">Hướng dẫn</span>
+                        <span class="crumb-separator">/</span>
+                        <span id="crumbTitle" class="crumb-title">Bài viết</span>
+                    </div>
+                </div>
+
+                <!-- Article Card -->
+                <article class="article-box">
+                    <header class="article-header">
+                        <div class="article-meta-top">
+                            <span id="postCategoryBadge" class="category-badge">Hướng dẫn</span>
+                            <span id="postReadingTime" class="reading-time-badge">
+                                <i class="ph ph-clock"></i> 3 phút đọc
+                            </span>
+                        </div>
+                        <h1 id="postTitle" class="article-title">Tiêu đề bài viết</h1>
+                        <div class="article-meta-bottom">
+                            <div class="meta-item">
+                                <i class="ph ph-calendar"></i>
+                                <span id="postDate">26/08/2026</span>
+                            </div>
+                            <div class="article-share-actions">
+                                <button id="copyLinkBtn" class="action-btn" title="Sao chép link bài viết">
+                                    <i class="ph ph-link-simple"></i> Sao chép link
+                                </button>
+                                <button id="shareFbBtn" class="action-btn" title="Chia sẻ lên Facebook">
+                                    <i class="ph ph-share-network"></i> Chia sẻ
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+
+                    <!-- Featured Cover Image -->
+                    <div id="postCoverWrapper" class="article-cover">
+                        <img id="postCover" src="" alt="Cover" class="cover-img">
+                    </div>
+
+                    <!-- Article Body -->
+                    <div id="postContent" class="article-content">
+                        <!-- Content inserted dynamically -->
+                    </div>
+
+                    <!-- Footer of Article -->
+                    <footer class="article-footer">
+                        <div class="article-tags">
+                            <span class="tag-label"><i class="ph ph-tag"></i> Thẻ:</span>
+                            <span id="postTagSpan" class="tag-item">Hoyoverse</span>
+                        </div>
+                        <div class="footer-actions">
+                            <a href="#/" class="btn btn-outline">
+                                <i class="ph ph-arrow-left"></i> Danh sách bài viết
+                            </a>
+                            <button id="scrollToTopBtn" class="btn btn-outline" title="Lên đầu trang">
+                                <i class="ph ph-arrow-up"></i> Lên đầu trang
+                            </button>
+                        </div>
+                    </footer>
+                </article>
+
+                <!-- Related Posts Section -->
+                <section class="related-section">
+                    <h3 class="related-title">
+                        <i class="ph-fill ph-sparkle"></i> Có thể bạn quan tâm
+                    </h3>
+                    <div id="relatedGrid" class="related-grid">
+                        <!-- Related post cards -->
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="ph-fill ph-game-controller"></i>
+                    </div>
+                    <span class="logo-title">HOYO BLOG</span>
+                </div>
+                <p class="footer-desc">
+                    Trang blog cá nhân tổng hợp kiến thức, hướng dẫn và giải đáp thắc mắc dịch vụ game.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>Chuyên mục & Quản trị</h4>
+                <ul>
+                    <li><a href="#/" class="category-link" data-category="Hướng dẫn Game">Hướng dẫn Game</a></li>
+                    <li><a href="#/" class="category-link" data-category="Chính sách">Chính sách & Bảo hành</a></li>
+                    <li><a href="#/" class="category-link" data-category="Bảo mật Email">Bảo mật Email Outlook</a></li>
+                    <li><a href="/admin.html" style="color: var(--primary-light); font-weight: 600;"><i class="ph ph-shield-check"></i> Quản trị bài viết</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container bottom-inner">
+                <p>&copy; 2026 Hoyo Blog. All rights reserved.</p>
+                <p class="footer-note">Cập nhật cẩm nang chơi game an toàn & bảo mật.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Image Lightbox Modal -->
+    <div id="imageLightbox" class="lightbox-modal d-none">
+        <div class="lightbox-backdrop"></div>
+        <div class="lightbox-content">
+            <button id="closeLightboxBtn" class="lightbox-close-btn" title="Đóng (ESC)">
+                <i class="ph ph-x"></i>
+            </button>
+            <img id="lightboxImg" src="" alt="Enlarged view">
+            <div id="lightboxCaption" class="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast d-none">
+        <i class="ph-fill ph-check-circle toast-icon"></i>
+        <span id="toastMessage">Thông báo</span>
+    </div>
+
+    <!-- Scripts -->
+    <script src="blogs_data.js?v=3"></script>
+    <script src="app.js?v=3"></script>
+</body>
+</html>

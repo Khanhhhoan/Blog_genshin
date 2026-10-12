@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Trị Blog - Hoyo CMS</title>
+    <link rel="icon" href="images/thumb_cachlienkethoyoverse.jpg" type="image/jpeg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
+
+    <link rel="stylesheet" href="style.css?v=4">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin-body">
+    <!-- Ambient Background Lights -->
+    <div class="ambient-glow glow-1"></div>
+    <div class="ambient-glow glow-2"></div>
+
+    <!-- 1. LOGIN SCREEN -->
+    <div id="loginScreen" class="admin-login-screen">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-icon">
+                    <i class="ph-fill ph-shield-check"></i>
+                </div>
+                <h2>Đăng Nhập Quản Trị</h2>
+                <p>Quản lý và chỉnh sửa bài viết trên Blog của bạn</p>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="usernameInput"><i class="ph ph-user"></i> Tài khoản</label>
+                    <input type="text" id="usernameInput" placeholder="Nhập tài khoản quản trị" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="passwordInput"><i class="ph ph-lock-key"></i> Mật khẩu</label>
+                    <input type="password" id="passwordInput" placeholder="Nhập mật khẩu" required autocomplete="current-password">
+                </div>
+                <div id="loginError" class="alert-error d-none">
+                    <i class="ph ph-warning-circle"></i> <span id="loginErrorMsg"></span>
+                </div>
+                <button type="submit" id="loginSubmitBtn" class="btn btn-primary btn-block">
+                    <span>Đăng nhập</span> <i class="ph ph-arrow-right"></i>
+                </button>
+            </form>
+
+            <div class="login-footer">
+                <a href="/" class="back-link"><i class="ph ph-arrow-left"></i> Về trang chủ Blog</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. ADMIN DASHBOARD (Authenticated) -->
+    <div id="dashboardScreen" class="dashboard-screen d-none">
+        <!-- Admin Header -->
+        <header class="admin-header">
+            <div class="container admin-header-inner">
+                <div class="admin-brand">
+                    <a href="/admin.html" class="logo">
+                        <div class="logo-icon">
+                            <i class="ph-fill ph-gear"></i>
+                        </div>
+                        <div class="logo-text">
+                            <span class="logo-title">HOYO CMS</span>
+                            <span class="logo-subtitle">Quản trị bài viết</span>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="admin-nav-actions">
+                    <a href="/" target="_blank" class="btn btn-outline btn-sm">
+                        <i class="ph ph-arrow-square-out"></i> Xem Blog
+                    </a>
+                    <button id="openChangePassBtn" class="btn btn-outline btn-sm">
+                        <i class="ph ph-key"></i> Đổi mật khẩu
+                    </button>
+                    <button id="logoutBtn" class="btn btn-danger-outline btn-sm">
+                        <i class="ph ph-sign-out"></i> Đăng xuất
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="container admin-main">
+            <!-- Stats Row -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon icon-purple"><i class="ph-fill ph-article"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Tổng bài viết</span>
+                        <h3 id="statTotalPosts" class="stat-number">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-blue"><i class="ph-fill ph-tag"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Chuyên mục</span>
+                        <h3 id="statCategories" class="stat-number">0</h3>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon icon-gold"><i class="ph-fill ph-clock"></i></div>
+                    <div class="stat-info">
+                        <span class="stat-label">Trạng thái</span>
+                        <h3 class="stat-number stat-online">Sẵn sàng</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Posts Management Header -->
+            <div class="management-bar">
+                <div class="management-left">
+                    <h2 class="management-title">Danh Sách Bài Viết</h2>
+                    <div class="search-box">
+                        <i class="ph ph-magnifying-glass"></i>
+                        <input type="text" id="adminSearchInput" placeholder="Tìm theo tiêu đề...">
+                    </div>
+                </div>
+                <button id="createPostBtn" class="btn btn-primary">
+                    <i class="ph ph-plus-circle"></i> Thêm bài viết mới
+                </button>
+            </div>
+
+            <!-- Posts Table / List -->
+            <div class="table-container">
+                <table class="posts-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Ảnh</th>
+                            <th>Tiêu đề & Tóm tắt</th>
+                            <th style="width: 140px;">Chuyên mục</th>
+                            <th style="width: 150px;">Ngày đăng</th>
+                            <th style="width: 160px; text-align: right;">Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody id="postsTableBody">
+                        <!-- Rendered by admin.js -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- 3. POST EDITOR MODAL -->
+    <div id="editorModal" class="editor-modal d-none">
+        <div class="editor-backdrop"></div>
+        <div class="editor-container">
+            <header class="editor-header">
+                <div class="editor-title-wrap">
+                    <i class="ph-fill ph-note-pencil"></i>
+                    <h3 id="editorModalTitle">Chỉnh sửa bài viết</h3>
+                </div>
+                <button id="closeEditorBtn" class="modal-close-btn" title="Đóng">
+                    <i class="ph ph-x"></i>
+                </button>
+            </header>
+
+            <form id="postEditorForm" class="editor-form">
+                <input type="hidden" id="editPostOldSlug">
+
+                <div class="form-row">
+                    <div class="form-group flex-2">
+                        <label for="postTitleInput">Tiêu đề bài viết <span class="required">*</span></label>
+                        <input type="text" id="postTitleInput" placeholder="Nhập tiêu đề..." required>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label for="postSlugInput">Đường dẫn (Slug) <span class="required">*</span></label>
+                        <input type="text" id="postSlugInput" placeholder="duong-dan-bai-viet" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label for="postCategoryInput">Chuyên mục</label>
+                        <select id="postCategoryInput">
+                            <option value="Hướng dẫn Game">Hướng dẫn Game</option>
+                            <option value="Chính sách">Chính sách</option>
+                            <option value="Bảo mật Email">Bảo mật Email</option>
+                            <option value="Tin tức">Tin tức</option>
+                            <option value="Hỏi đáp">Hỏi đáp</option>
+                        </select>
+                    </div>
+                    <div class="form-group flex-2">
+                        <label for="postSummaryInput">Tóm tắt ngắn (Excerpt)</label>
+                        <input type="text" id="postSummaryInput" placeholder="Mô tả ngắn hiển thị bên ngoài danh sách...">
+                    </div>
+                </div>
+
+                <!-- Thumbnail Upload Section -->
+                <div class="form-group thumbnail-upload-box">
+                    <label>Ảnh đại diện (Thumbnail / Cover)</label>
+                    <div class="thumb-preview-row">
+                        <div class="thumb-preview-box">
+                            <img id="thumbPreviewImg" src="images/thumb_cachlienkethoyoverse.jpg" alt="Preview">
+                        </div>
+                        <div class="thumb-actions">
+                            <div class="upload-btn-wrap">
+                                <input type="file" id="thumbFileInput" accept="image/*" class="file-input-hidden">
+                                <button type="button" id="triggerThumbUploadBtn" class="btn btn-outline btn-sm">
+                                    <i class="ph ph-upload-simple"></i> Chọn ảnh từ máy tính
+                                </button>
+                                <span id="uploadingStatus" class="uploading-status d-none">
+                                    <i class="ph ph-spinner ph-spin"></i> Đang tải lên...
+                                </span>
+                            </div>
+                            <div class="url-input-wrap">
+                                <label class="sub-label">Hoặc đường dẫn ảnh:</label>
+                                <input type="text" id="thumbUrlInput" placeholder="images/ten-anh.jpg">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Markdown Editor -->
+                <div class="form-group content-editor-box">
+                    <div class="editor-tabs-bar">
+                        <div class="editor-toolbar">
+                            <button type="button" class="tool-btn" data-action="bold" title="In đậm (Ctrl+B)"><b>B</b></button>
+                            <button type="button" class="tool-btn" data-action="italic" title="In nghiêng (Ctrl+I)"><i>I</i></button>
+                            <button type="button" class="tool-btn" data-action="h1" title="Tiêu đề 1">H1</button>
+                            <button type="button" class="tool-btn" data-action="h2" title="Tiêu đề 2">H2</button>
+                            <button type="button" class="tool-btn" data-action="h3" title="Tiêu đề 3">H3</button>
+                            <button type="button" class="tool-btn" data-action="ul" title="Danh sách gạch đầu dòng">• List</button>
+                            <button type="button" class="tool-btn" data-action="quote" title="Trích dẫn">" Quote</button>
+                            <button type="button" class="tool-btn" data-action="hr" title="Đường kẻ ngang">─ Kẻ</button>
+                            <button type="button" class="tool-btn" data-action="link" title="Chèn liên kết">🔗 Link</button>
+                            <label class="tool-btn insert-img-label" title="Chèn ảnh vào bài">
+                                <i class="ph ph-image"></i> Chèn ảnh
+                                <input type="file" id="contentImageUpload" accept="image/*" class="file-input-hidden">
+                            </label>
+                        </div>
+                        <div class="view-switch-tabs">
+                            <button type="button" id="tabEdit" class="tab-btn active">Soạn thảo (Markdown)</button>
+                            <button type="button" id="tabPreview" class="tab-btn">Xem trước (Preview)</button>
+                        </div>
+                    </div>
+
+                    <!-- Editor Area -->
+                    <div class="editor-pane-wrap">
+                        <div class="paste-hint-bar">
+                            <i class="ph-fill ph-lightning"></i> <span><strong>Mẹo ảnh:</strong> Bạn có thể chụp ảnh màn hình rồi bấm <code>Ctrl + V</code> (Dán) thẳng vào đây, hoặc kéo thả file ảnh từ máy vào!</span>
+                        </div>
+                        <textarea id="postContentMarkdown" placeholder="Soạn nội dung bài viết bằng Markdown..."></textarea>
+                        <div id="postContentPreview" class="article-content preview-pane d-none"></div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="editor-actions">
+                    <button type="button" id="cancelEditorBtn" class="btn btn-outline">Hủy bỏ</button>
+                    <button type="submit" id="savePostBtn" class="btn btn-primary">
+                        <i class="ph ph-floppy-disk"></i> Lưu bài viết
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- 4. CHANGE PASSWORD MODAL -->
+    <div id="changePassModal" class="editor-modal d-none">
+        <div class="editor-backdrop"></div>
+        <div class="editor-container modal-small">
+            <header class="editor-header">
+                <div class="editor-title-wrap">
+                    <i class="ph-fill ph-key"></i>
+                    <h3>Đổi Mật Khẩu Quản Trị</h3>
+                </div>
+                <button id="closePassModalBtn" class="modal-close-btn"><i class="ph ph-x"></i></button>
+            </header>
+            <form id="changePassForm" class="editor-form" style="padding: 1.5rem;">
+                <div class="form-group">
+                    <label for="currentPassInput">Mật khẩu hiện tại</label>
+                    <input type="password" id="currentPassInput" required placeholder="Nhập mật khẩu cũ">
+                </div>
+                <div class="form-group">
+                    <label for="newPassInput">Mật khẩu mới</label>
+                    <input type="password" id="newPassInput" required placeholder="Nhập mật khẩu mới (tối thiểu 4 ký tự)">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassInput">Xác nhận mật khẩu mới</label>
+                    <input type="password" id="confirmPassInput" required placeholder="Nhập lại mật khẩu mới">
+                </div>
+                <div id="passError" class="alert-error d-none"></div>
+                <div class="editor-actions">
+                    <button type="button" id="cancelPassBtn" class="btn btn-outline">Hủy</button>
+                    <button type="submit" class="btn btn-primary">Xác nhận đổi</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="adminToast" class="toast d-none">
+        <i class="ph-fill ph-check-circle toast-icon"></i>
+        <span id="adminToastMsg">Thông báo</span>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>
