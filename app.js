@@ -206,7 +206,21 @@
                 e.preventDefault();
                 elements.searchInput?.focus();
             }
+            // Secret Shortcut for Admin: Ctrl + Shift + A
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+                e.preventDefault();
+                window.location.href = 'admin.html';
+            }
         });
+
+        // Secret double-click on Header Logo to open Admin
+        const logo = document.querySelector('.site-header .logo');
+        if (logo) {
+            logo.addEventListener('dblclick', (e) => {
+                e.preventDefault();
+                window.location.href = 'admin.html';
+            });
+        }
     }
 
     /**
