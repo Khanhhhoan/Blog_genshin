@@ -58,18 +58,27 @@
      */
     async function init() {
         bindEvents();
-        // Try fetching freshest posts from CMS API
-        try {
-            const res = await fetch('/api/posts');
-            if (res.ok) {
-                const json = await res.json();
-                if (json.success && Array.isArray(json.data) && json.data.length > 0) {
-                    state.posts = json.data;
+
+        // On GitHub Pages (static reader mode), hide Admin buttons for guests
+        if (window.location.hostname.includes('github.io')) {
+            document.querySelectorAll('.admin-nav-btn, a[href*="admin.html"]').forEach(btn => {
+                btn.style.display = 'none';
+            });
+        } else {
+            // Try fetching freshest posts from local/cloud CMS API
+            try {
+                const res = await fetch('/api/posts');
+                if (res.ok) {
+                    const json = await res.json();
+                    if (json.success && Array.isArray(json.data) && json.data.length > 0) {
+                        state.posts = json.data;
+                    }
                 }
+            } catch (e) {
+                // Fallback to window.BLOGS_DATA
             }
-        } catch (e) {
-            // Fallback to window.BLOGS_DATA already in state
         }
+
         handleRoute();
         window.addEventListener('hashchange', handleRoute);
         window.addEventListener('scroll', updateReadingProgress);
