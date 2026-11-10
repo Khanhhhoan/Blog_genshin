@@ -17,12 +17,12 @@
 
 ### ⏰ 2. Thời hạn trả góp
 
-| Tổng giá trị ACC | Thời hạn thanh toán phần còn lại |
-|---|---|
-| Dưới 1.000.000 đồng | 14 ngày |
-| Từ 1.000.000 đến dưới 5.000.000 đồng | 1 tháng |
-| Từ 5.000.000 đến 10.000.000 đồng | 2 tháng |
-| Trên 10.000.000 đồng | Thỏa thuận trực tiếp với Shop |
+Thời hạn thanh toán **50% còn lại** được tính theo tổng giá trị ACC:
+
+- **Dưới 1.000.000 đồng:** 14 ngày
+- **Từ 1.000.000 đến dưới 5.000.000 đồng:** 1 tháng
+- **Từ 5.000.000 đến 10.000.000 đồng:** 2 tháng
+- **Trên 10.000.000 đồng:** Thỏa thuận trực tiếp với Shop
 
 Ngày bắt đầu, lịch thanh toán và hạn thanh toán cuối cùng được hai bên xác nhận trước khi bàn giao ACC.
 
@@ -46,8 +46,6 @@ Ngày bắt đầu, lịch thanh toán và hạn thanh toán cuối cùng đư�
 ### ✅ 6. Hoàn tất giao dịch
 
 Giao dịch trả góp được xác nhận hoàn tất khi khách đã thanh toán đủ **100% giá trị ACC và các khoản phí phát sinh, nếu có**.
-
----
 
 ### 📌 TÓM TẮT QUY TRÌNH
 
